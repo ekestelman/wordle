@@ -1,6 +1,6 @@
 import random
 
-def solve(ans):
+def solve(ans, show=False):
   
   with open('word_list','r') as f:
     wordlist = f.read().split()
@@ -11,7 +11,8 @@ def solve(ans):
   tries = 1
   
   guess = wordlist[i]
-  #print(guess)
+  if show:
+    print(guess)
   
   grey = {}         # Letters known to not be in ans
   orange = {}       # Letters known to be in ans but placement unknown
@@ -47,13 +48,16 @@ def solve(ans):
         continue
       good = True    # This is just another break
     
-    #print(guess)
+    if show:
+      print(guess)
     tries += 1
     if tries == 6:
       break
   
-  #print(ans)
+  if show:
+    print(ans)
   if guess == ans:
     return 1
   else:
     return 0
+

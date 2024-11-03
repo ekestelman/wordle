@@ -23,11 +23,14 @@ def solve(ans, show=False):
     # FIXME anticipate bug in case of repeat letters
     # I think simply this will work as if the game gives orange to
     # non repeat letter repeated in a guess.
+    # TODO needs to come after guess to better update "show"
+    # make function to come immediately after first guess, or second
+    # guess won't be good.
     for j in range(5):
       if guess[j] == ans[j]:
-        green[guess[j]] = None
+        green[guess[j]] = j
       elif guess[j] in ans:
-        orange[guess[j]] = None
+        orange[guess[j]] = j
       else:
         grey[guess[j]] = None
   
@@ -42,6 +45,13 @@ def solve(ans, show=False):
         if guess[j] in grey:
           breakout = True
           break
+        elif guess[j] in orange and orange[guess[j]] == j:
+          breakout = True
+          break
+        # The following is the converse of what we want
+        #elif guess[j] in green and green[guess[j]] != j:
+        #  breakout = True
+        #  break
       #print(i,breakout,good)
       # TODO better way to "show work"
       if breakout:
@@ -49,7 +59,13 @@ def solve(ans, show=False):
       good = True    # This is just another break
     
     if show:
-      print(guess)
+      correct = ""
+      for j in range(5):
+        if guess[j] == ans[j]:
+          correct += guess[j]
+        else:
+          correct += "_"
+      print(guess, correct, [x for x in orange])
     tries += 1
     if tries == 6:
       break

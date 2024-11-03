@@ -9,4 +9,5 @@ def assign_ans():
   return ans
 
 if __name__ == "__main__":
-  solver.solve(assign_ans(), show=True)
+  ans = input("Choose answer (skip for random) > ") or assign_ans()
+  solver.solve(ans, show=True)

@@ -41,6 +41,12 @@ def solve(ans, show=False):
       breakout = False  # True if a loop is broken
       i += 1
       guess = wordlist[i]
+      for elem in green:
+        if guess[green[elem]] != elem:
+          breakout = True
+          break
+      if breakout:
+        continue
       for j in range(5):
         if guess[j] in grey:
           breakout = True
@@ -50,8 +56,13 @@ def solve(ans, show=False):
           break
         # The following is the converse of what we want
         #elif guess[j] in green and green[guess[j]] != j:
-        #  breakout = True
-        #  break
+        # ^Wrong, eliminates answers with green in an unknown spot, instead
+        # of answers without green in correct spot (i.e., fails to find any
+        # answer with a repeat letter and will exhaust the word list.
+        #elif guess[j] in green and guess[green[guess[j]]] != guess[j]:
+        # ^Better, but only checks green if it's already in the guess.
+          #breakout = True
+          #break
       #print(i,breakout,good)
       # TODO better way to "show work"
       if breakout:

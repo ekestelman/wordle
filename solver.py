@@ -7,10 +7,13 @@ def solve(ans, show=False):
 
   #ans = random.choice(wordlist)  # Correct answer
 
-  i = 0
+  i = -1
   tries = 1
+
+  first = "irate"#wordlist[i+1]
+  # TODO keep track of guessed words with dict
   
-  guess = wordlist[i]
+  guess = first
   if show:
     print(guess)
   
@@ -26,6 +29,8 @@ def solve(ans, show=False):
     # TODO needs to come after guess to better update "show"
     # make function to come immediately after first guess, or second
     # guess won't be good.
+    # TODO "move" guess from orange to green when position becomes known? then
+    # we can rule out repeat letters as we would in real game
     for j in range(5):
       if guess[j] == ans[j]:
         green[guess[j]] = j
@@ -41,10 +46,19 @@ def solve(ans, show=False):
       breakout = False  # True if a loop is broken
       i += 1
       guess = wordlist[i]
+      # TODO better way to track used words if non alpha
+      if guess == first:
+        continue
       for elem in green:
         if guess[green[elem]] != elem:
           breakout = True
           break
+      if breakout:
+        continue
+      for elem in orange:
+        # TODO way to handle duplicates
+        if elem not in guess:  # or guess[orange[elem]] = elem
+          breakout = True
       if breakout:
         continue
       for j in range(5):

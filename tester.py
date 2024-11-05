@@ -10,8 +10,17 @@ def assign_ans():
   return ans
 
 if __name__ == "__main__":
+
+  with open('word_list', 'r') as f:
+    wordlist = f.read().split()
+
   score = 0
-  for i in range(1000):
-    score += solver.solve(assign_ans())
-  print(score/10)
-  # TODO get sem for win rate
+  nwords = len(wordlist)
+
+  for i in range(len(wordlist)):
+    score += solver.solve(wordlist[i])
+
+  print("Total solved puzzles:", score, "/", nwords)
+  print("Win rate:", round(score / nwords * 100,2), "\b%")
+  # Get sem for win rate?
+  # ^Unnecessary if stat is on population and not sample

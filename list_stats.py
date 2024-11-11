@@ -1,5 +1,6 @@
 import string
 import matplotlib.pyplot as plt
+import json
 
 with open("word_list", 'r') as f:
   wordlist = f.read().split()
@@ -48,9 +49,32 @@ for word in wordlist:
 ordered_scores = sorted(word_scores, key=word_scores.get, reverse=True)
 #ordered_scores_dict = {word : word_scores[word] for word in ordered_scores}
 print({word : word_scores[word] for word in ordered_scores[:10]})
+print(word_scores['weary'], ordered_scores.index('weary'),word_scores['yearn'],word_scores['steer'])
+if 0:  # Print json of word list
+  print(json.dumps({word : word_scores[word] for word in ordered_scores},indent=2))
+if 0:  # Print word list to csv
+  with open("words.csv",'w') as f:
+    f.write("word,rating\n")
+    for word in word_scores:
+      f.write(word + "," + str(word_scores[word]) + '\n')
 
 #ltrs = [ltr for ltr in ordered_freq]
 #freq = [ordered_freq[ltr] for ltr in ltrs]
-print(ordered_freq.values()) # Doesn't print anything?
-plt.bar(ordered_freq.keys(),ordered_freq.values())
-plt.show()
+# TODO add second y-axis for percentage
+if 1:  # Graph letter frequencies
+  padding = 1.05
+  ymax = max(ordered_freq.values())
+  fig, ax1 = plt.subplots()
+  ax1.bar(ordered_freq.keys(),ordered_freq.values())
+  ax1.set_ylim(0, ymax * padding)
+  ax1.set_ylabel("Number of Words")
+  nwords = len(wordlist)
+  ax2 = ax1.twinx()
+  # need to set ylim on both axs to make them match
+  ax2.set_ylim(0, ymax / nwords * 100 * padding)
+  ax2.set_ylabel("Percentage out of Possible Solutions")
+  ax2.set_yticklabels([f'{x:.0f}%' for x in ax2.get_yticks()])
+  # List is ordered we can index instead of using min/max funcs
+  #plt.bar(ordered_freq.keys(),ordered_freq.values())
+  plt.title("Amount of Words Containing Each Letter")
+  plt.show()

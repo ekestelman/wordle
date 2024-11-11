@@ -1,16 +1,20 @@
 import random
 from list_stats import get_word_scores, get_ltr_freq
 
-def solve(ans, show=False):
+def solve(ans, wordlist=None, ordered=False, show=False):
   
   # TODO for more interactive program, try having user input string
   # representing orange/green/grey after each guess.
 
-  with open('word_list','r') as f:
-    wordlist = f.read().split()
+  if not wordlist:
+    with open('word_list','r') as f:
+      wordlist = f.read().split()
 
-  ltr_freq = get_ltr_freq(wordlist)
-  wordlist = get_word_scores(wordlist, ltr_freq, orderedlist=True)
+  # If wordlist is given but it's not ordered we still need to order it.
+  if not ordered:
+    # These function are much slower than the repeat file reading.
+    ltr_freq = get_ltr_freq(wordlist)
+    wordlist = get_word_scores(wordlist, ltr_freq, orderedlist=True)
   #ans = random.choice(wordlist)  # Correct answer
 
   i = -1

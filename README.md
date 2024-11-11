@@ -18,4 +18,10 @@ Below we see each letter in order of greatest to least frequency. "Frequency" re
 
 We can attempt to give each word a rating based on how much we learn by guessing that word. A simple rating method is to add up the frequencies of each letter for a given word while omitting duplicate letters. Then the word "weary" would have a rating of $194+1056+909+837+417=3413$. There are 272 words on the solution list with higher ratings.
 
-The five top rated words are alert, alter, later, irate, and arose.
+With this method, the five top rated words are alert, alter, later, irate, and arose.
+
+Currently the program is solving puzzles with the distribution below.
+
+![](https://github.com/ekestelman/wordle/blob/main/guesses_bar_graph.svg)
+
+This shows the number of guesses taken to solve each of the 2315 puzzles. If the puzzle is not solved within 6 guesses, it is failed. Note that exactly one puzzle is solved in one guess.

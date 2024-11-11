@@ -112,7 +112,7 @@ def solve(ans, wordlist=None, ordered=False, show=False):
   if show:
     print(ans)
   if guess == ans:
-    return 1
+    return tries
   else:
     return 0
 

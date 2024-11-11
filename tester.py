@@ -21,14 +21,24 @@ if __name__ == "__main__":
 
   score = 0
   nwords = len(wordlist)
+  guesses_list = [0 for _ in range(7)]  # 1-6 possible guesses + failing
 
   for i in range(len(wordlist)):
-    old_score = score
-    score += solver.solve(wordlist[i], wordlist=wordlist, ordered=True)
-    if 0 and old_score == score: # Print failed puzzles
+    guesses = solver.solve(wordlist[i], wordlist=wordlist, ordered=True)
+    #old_score = score
+    #score += solver.solve(wordlist[i], wordlist=wordlist, ordered=True)
+    if guesses:  # solver returns 0 if failed
+      score += 1
+    guesses_list[guesses] += 1
+    if 0 and guesses==0: # Print failed puzzles
       print(wordlist[i])
 
   print("Total solved puzzles:", score, "/", nwords)
   print("Win rate:", round(score / nwords * 100,2), "\b%")
   # Get sem for win rate?
   # ^Unnecessary if stat is on population and not sample
+  if 1:
+    label=list(range(1,7)) + ["Fail"]
+    plt.bar(range(7), guesses_list[1:] + guesses_list[0:1], tick_label=label)
+    #plt.xticks = ([1,2,3,4,5,6,7], ['1','2','3','4','5','6',"Fail"])
+    plt.show()

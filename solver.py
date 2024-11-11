@@ -1,10 +1,16 @@
 import random
+from list_stats import get_word_scores, get_ltr_freq
 
 def solve(ans, show=False):
   
+  # TODO for more interactive program, try having user input string
+  # representing orange/green/grey after each guess.
+
   with open('word_list','r') as f:
     wordlist = f.read().split()
 
+  ltr_freq = get_ltr_freq(wordlist)
+  wordlist = get_word_scores(wordlist, ltr_freq, orderedlist=True)
   #ans = random.choice(wordlist)  # Correct answer
 
   i = -1
@@ -31,11 +37,15 @@ def solve(ans, show=False):
     # guess won't be good.
     # TODO "move" guess from orange to green when position becomes known? then
     # we can rule out repeat letters as we would in real game
+    # TODO dict assigner function, this is useful in other modules.
     for j in range(5):
       if guess[j] == ans[j]:
         green[guess[j]] = j
       elif guess[j] in ans:
         orange[guess[j]] = j
+        # FIXME overwrites previously known wrong position.
+        # Values for green and orange should be lists containing each
+        # known position.
       else:
         grey[guess[j]] = None
   

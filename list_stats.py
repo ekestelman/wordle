@@ -2,7 +2,8 @@ import string
 import matplotlib.pyplot as plt
 import json
 
-def get_word_scores(wordlist, ltrdict, orderedlist=False):
+def get_word_scores(wordlist, ltr_freq, orderedlist=False):
+  # ltr_freq is dict of ltr : freq
   word_scores = {word : 0 for word in wordlist}
   
   for word in wordlist:

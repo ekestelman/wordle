@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import random
 import solver
+import json
 from scipy.stats import sem
 from list_stats import get_word_scores, get_ltr_freq
 
@@ -35,6 +36,14 @@ if __name__ == "__main__":
 
   print("Total solved puzzles:", score, "/", nwords)
   print("Win rate:", round(score / nwords * 100,2), "\b%")
+  results_summary = {
+                     "win rate" : str(score) + "/" + str(nwords),
+                     "win rate" : str(round(score / nwords * 100, 2)) + '%',
+                     "avg guesses" : round( (sum(i * guesses_list[i] \
+                     for i in range(1,7)) + guesses_list[0] * 6) / score, 2)
+                     }
+  with open("results_summary.json", 'w') as f:
+    json.dump(results_summary, f, indent=2)
   # Get sem for win rate?
   # ^Unnecessary if stat is on population and not sample
   if 1:

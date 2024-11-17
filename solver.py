@@ -44,9 +44,9 @@ def solve(ans, wordlist=None, ordered=False, show=False):
     # TODO dict assigner function, this is useful in other modules.
     for j in range(5):
       if guess[j] == ans[j]:
-        green[guess[j]] = j
+        green[guess[j]] = green.get(guess[j],set()) | {j}
       elif guess[j] in ans:
-        orange[guess[j]] = j
+        orange[guess[j]] = orange.get(guess[j],set()) | {j}
         # FIXME overwrites previously known wrong position.
         # Values for green and orange should be lists containing each
         # known position.
@@ -61,17 +61,26 @@ def solve(ans, wordlist=None, ordered=False, show=False):
       i += 1
       guess = wordlist[i]
       # TODO better way to track used words if non alpha
-      if guess == first:
-        continue
-      for elem in green:
-        if guess[green[elem]] != elem:
-          breakout = True
+      # Current method: preorder the words (con: can't adjust based on new info
+      # Also: no need to track used words if we determine that we learn nothing
+      if guess == first:  # Allows you to choose any starting word even if it's
+        continue          # not the first in the word order. Skip this word.
+      # TODO Alernative that allows flexibility with greens but checks if
+      # remaining missing letters are already known.
+      # Maybe special set of criteria for elimination guesses, or even guess
+      # could be elimination (try both?)
+      for ltr in green:   # Letter
+        for pos in green[ltr]:   # Known positions
+          if guess[pos] != ltr:
+            breakout = True
+            break
+        if breakout:   # TODO beneficial for performance?
           break
       if breakout:
         continue
-      for elem in orange:
+      for ltr in orange:
         # TODO way to handle duplicates
-        if elem not in guess:  # or guess[orange[elem]] = elem
+        if ltr not in guess:  # or guess[orange[elem]] = elem
           breakout = True
       if breakout:
         continue
@@ -79,7 +88,7 @@ def solve(ans, wordlist=None, ordered=False, show=False):
         if guess[j] in grey:
           breakout = True
           break
-        elif guess[j] in orange and orange[guess[j]] == j:
+        elif guess[j] in orange and j in orange[guess[j]]:
           breakout = True
           break
         # The following is the converse of what we want

@@ -1,5 +1,9 @@
 # wordle
 
+![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2Fekestelman%2Fwordle%2Fraw%2Frefs%2Fheads%2Fmain%2Fresults_summary.json&query=%24.win%20rate&label=Win%20Rate&color=brightgreen)
+![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2Fekestelman%2Fwordle%2Fraw%2Frefs%2Fheads%2Fmain%2Fresults_summary.json&query=%24.avg%20guesses&style=flat&label=Avg%20Guesses&color=blue)
+
+
 Wordle puzzle solver.
 
 `solver` module takes steps to solve a puzzle for a given solution.

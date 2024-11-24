@@ -1,8 +1,9 @@
 import random
 from list_stats import get_word_scores, get_ltr_freq
 
-def solve(ans, wordlist=None, ordered=False, show=False):
+def solve(ans, first='salet', wordlist=None, ordered=False, show=False):
   
+  # Common starting words: salet, crane, irate.
   # TODO for more interactive program, try having user input string
   # representing orange/green/grey after each guess.
 
@@ -20,7 +21,6 @@ def solve(ans, wordlist=None, ordered=False, show=False):
   i = -1
   tries = 1
 
-  first = "irate"#wordlist[i+1]
   # TODO keep track of guessed words with dict
   
   guess = first

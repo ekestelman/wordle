@@ -10,4 +10,7 @@ def assign_ans():
 
 if __name__ == "__main__":
   ans = input("Choose answer (skip for random) > ") or assign_ans()
-  solver.solve(ans, show=True)
+  default_first = 'irate'
+  first = input(f"Choose starting word (skip for '{default_first}') > ") \
+          or default_first
+  solver.solve(ans, first=first, show=True)
